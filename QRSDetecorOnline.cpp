@@ -128,7 +128,14 @@ void bandpassFilter( double f_hz,           // Filter centre frequency
         x_1 = x[i];
         y_2 = y_1 ;
         y_1 = y[i];
-        printf("%0.8f\n", y[i]);
+        //printf("%0.8f\n", y[i]);
+    }
+}
+void diff(double *y, int n){
+    double h = sqrt(DBL_EPSILON);
+    for(int i = 0; i < n-1; i++) {
+        y[i] = y[i+1] - y[i];
+        //printf("%0.3f\n", y[i]);
     }
 }
 int main(){
@@ -139,5 +146,6 @@ int main(){
     //get_qrs_indices(ecg_data_raw);
     bandpassFilter(8.660254038f, 5.0f, x, y,  2719);
     //for(int i=0;i<ecg_data_raw.size(); i++) cout<<" x "<< x[i] << " y "<< y[i]<<endl;
+    diff(y, ecg_data_raw.size());
     return 0;
 }

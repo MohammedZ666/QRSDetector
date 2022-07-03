@@ -25,7 +25,7 @@ def load_ecg_data():
 data = load_ecg_data()[:,1]
 data_filtered = bandpass_filter(data, 5, 15, 250, 1)
 data_filtered_cpp = np.loadtxt("filtered.txt")
-trunc = np.vectorize(lambda x : float('%.2f'%(x)))
-#print(data_filtered,'\n\n\nfiltered\n\n\n', data_filtered_cpp )
-data =trunc(data_filtered_cpp) - trunc(data_filtered) 
-print(sum(data))
+trunc = np.vectorize(lambda x : float('%.3f'%(x)))
+
+diffed = trunc(np.loadtxt("diff.txt"))
+print(sum(diffed - trunc(np.ediff1d(data_filtered))))
